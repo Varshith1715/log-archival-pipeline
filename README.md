@@ -131,6 +131,7 @@ The logs will be stored in your S3 bucket under the logs/YYYY-MM-DD/ directory, 
 s3://your-bucket-name/logs/2025-03-30/app.log
 ```
 You can check the S3 console for the versioned log files.
+![Image](https://github.com/user-attachments/assets/a723b180-d028-4086-aa04-622a7b05a09e)
 
 ### 📝 **Explanation of Sections**:
 
