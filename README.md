@@ -31,6 +31,8 @@ git clone https://github.com/Varshith1715/log-archival-pipeline.git
 ### 2. Configure IAM Role
 Create an IAM role that allows EC2 instances to interact with the S3 bucket.
 
+![Image](https://github.com/user-attachments/assets/f67c0b6e-8de8-46a8-851f-53a1a6973f1f)
+
 Attach the following policy to the EC2 instance role:
 
 ```json
@@ -55,8 +57,13 @@ Attach the following policy to the EC2 instance role:
 ```
 ### 3. Launch EC2 Instance
 Launch an EC2 instance using Amazon Linux 2.
+![Image](https://github.com/user-attachments/assets/7bfea8d6-1a37-4ee0-a246-045be2ba717f)
+
+![Image](https://github.com/user-attachments/assets/4ea3196b-42aa-43ef-88b3-d4c288b64e12)
 
 Attach the IAM role to the EC2 instance.
+
+![Image](https://github.com/user-attachments/assets/b9557bae-70f8-448c-b2cb-175b74cc1274)
 
 Secure the instance by allowing SSH access only from your IP.
 
@@ -66,17 +73,22 @@ The log simulation script (simulate_logs.sh) will create an app.log file in /var
 ```bash
 bash scripts/simulate_logs.sh
 ```
+![Image](https://github.com/user-attachments/assets/3eb50613-7015-40ea-97d1-3184e89c3c65)
+
 ### 5. Configure Log Upload
 The upload script (upload_logs.sh) will compress the logs and upload them to the S3 bucket:
 
 ```bash
 bash scripts/upload_logs.sh
 ```
+
+
 ### 6. Automate Log Upload with Cron
 To automate the log upload every day at midnight, add the following cron job:
 ```bash
 crontab -e
 ```
+![Image](https://github.com/user-attachments/assets/81a0def1-738a-4689-bb67-5aaf0a5fe2f8)
 
 Add the following line to schedule the script:
 ```bash
@@ -86,8 +98,14 @@ Add the following line to schedule the script:
 ### 7. Versioning and Encryption
 Ensure that your S3 bucket has versioning enabled and optionally configure server-side encryption.
 
+![Image](https://github.com/user-attachments/assets/34870ac3-ca58-424a-8711-661fab538ba5)
+
+![Image](https://github.com/user-attachments/assets/e5cf13ce-d879-4b87-8fe2-1820546da8f4)
+
 ### 8. Testing the Upload
 Once the cron job is set, the logs will be compressed and uploaded to S3 every day. You can verify the upload and versioning in the S3 bucket using the AWS S3 console or CLI.
+
+![Image](https://github.com/user-attachments/assets/a6b89b4a-8a2e-43e7-9bb9-cdcc5b49ad42)
 
 File Structure
 ```graphql
@@ -116,8 +134,8 @@ Here is a sample IAM policy (S3LogUploadPolicy.json) that grants the EC2 instanc
                 "s3:ListBucket"
             ],
             "Resource": [
-                "arn:aws:s3:::my-bucket-var",
-                "arn:aws:s3:::my-bucket-var/*"
+                "arn:aws:s3:::bucket-name",
+                "arn:aws:s3:::bucket-name/*"
             ]
         }
     ]
@@ -130,6 +148,7 @@ The logs will be stored in your S3 bucket under the logs/YYYY-MM-DD/ directory, 
 
 s3://your-bucket-name/logs/2025-03-30/app.log
 ```
+
 You can check the S3 console for the versioned log files.
 ![Image](https://github.com/user-attachments/assets/a723b180-d028-4086-aa04-622a7b05a09e)
 
